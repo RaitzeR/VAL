@@ -53,10 +53,15 @@ def runSimulation():
     
     robot = Robot(ROBOSIZE,HALF_WINWIDTH,HALF_WINHEIGHT)
     
+    ##Init Renderers
+    
     environmentRenderer = EnvironmentRenderer(environment,camera,DISPLAY)
     randomRenderer = RandomRenderer(environment,camera,robot,DISPLAY)
     robotViewRenderer = RobotViewRenderer(robot,camera,DISPLAY)
     
+    ##
+    
+    ##Add sensors to the robot
     
     ultrasonic = Ultrasonic(350)
     robot.attachUltrasonic(ultrasonic)
@@ -65,7 +70,13 @@ def runSimulation():
     magnetometer = Magnetometer()
     robot.attachMagnetometer(magnetometer)
     
+    ##
+    
+    ##Add robot to the environment
+    
     environment.addRobot(robot)
+    
+    ##
     
     while True:
         
@@ -88,10 +99,16 @@ def runSimulation():
                 terminate()
             if doScan:
                 robot.scan(environment)
+                
+        ##
+        
+        ##handle robot movement
 
         robot.handleMovementCommands()                
         environment.triggerRobotRotation()        
         environment.triggerRobotMovement()
+        
+        ##
         
         
         pygame.display.update()
