@@ -1,0 +1,2 @@
+# RENDER
+The Render package handles all the rendering that happens. In the simulation this means we want to render the Environment into view, but in the real life, we want to only render what VAL has saved on her memory. This means essentially the data coming from her Ultrasonic sensor and maybe some other tracking data. For this reason the Renderers are separated and not consolidated into one Renderer.

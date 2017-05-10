@@ -1,0 +1,2 @@
+# HANDLERS
+The Handlers package will handle all the key inputs from pygame. This is not to be confused with the soon-to-come Handlers inside the Robot package, which will handle the Robot sensory and servo inputs and outputs.

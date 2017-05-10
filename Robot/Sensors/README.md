@@ -1,0 +1,4 @@
+# SENSORS
+The Robot\Sensors Package has all the necessary Sensor classes. It is divided into Simulator and Real packages. The Simulator classes are only to be used in the simulator, since they need the simulated Environment to work.
+
+There is an Abstract Sensor, which works as an interface for Sensor classes. It's main purpose is to provide a blueprint, so I (you) always know what methods there needs to be in a Sensor class. Inside the Simulated and Real packages are Sensor classes. Each sensor has their own class and they always inherit from the Sensor.py class. The only reason for this is to save some lines of code, as we have certain methods that can be directly inherited (for example the isActive method and setActive method).
