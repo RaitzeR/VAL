@@ -50,7 +50,6 @@ def runSimulation():
     environment = Environment()
     environment.buildWalls()
     
-    
     robot = Robot(ROBOSIZE,HALF_WINWIDTH,HALF_WINHEIGHT)
     
     ##Init Renderers

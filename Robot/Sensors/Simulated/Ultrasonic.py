@@ -37,9 +37,5 @@ class Ultrasonic(Sensor):
      ## 
     def scan(self, ENVIRONMENT,degree):
         self._before()
-        distance = ENVIRONMENT.askForCollision(self.scanLength,degree)
-        if distance != False:
-            return distance
-        else:
-            return False
+        return ENVIRONMENT.askForCollision(self.scanLength,degree)
         
