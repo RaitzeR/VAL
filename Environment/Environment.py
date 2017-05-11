@@ -79,7 +79,7 @@ class Environment(object):
                 self.robot.moverate = -abs(self.robot.maxSpeed)
         
         speeds = self.moveRobot(self.robot.moverate)
-        self.robotMovement += abs(speeds[0])+abs(speeds[1])
+        self.robotMovement += self.robot.moverate
         hallFrequency = getCircumference(self.robot.wheelDiameter) / self.robot.magnetCount
                                         
         if hallFrequency <= self.robotMovement:
@@ -108,7 +108,7 @@ class Environment(object):
         radians = math.radians(heading)
         x_speed = moverate * math.cos(radians)
         y_speed = moverate * math.sin(radians)
-        
+                
         self.robot.setX(self.robot.getX() + x_speed)
         self.robot.setY(self.robot.getY() + y_speed)
         

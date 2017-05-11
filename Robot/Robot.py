@@ -56,7 +56,7 @@ class Robot(object):
         radians = math.radians(heading)
         x_speed = hallDistance * math.cos(radians)
         y_speed = hallDistance * math.sin(radians)
-        
+                
         self.setSimX(self.getSimX() + x_speed)
         self.setSimY(self.getSimY() + y_speed)
         
@@ -74,6 +74,7 @@ class Robot(object):
         return self.simX
     
     def setSimX(self,x):
+        
         self.simX = x
         self.simXCenter = x + int(self.size / 2)
         
@@ -81,6 +82,7 @@ class Robot(object):
         return self.simY
     
     def setSimY(self,y):
+        
         self.simY = y
         self.simYCenter = y + int(self.size / 2)
     
@@ -88,6 +90,7 @@ class Robot(object):
         return self.x
     
     def setX(self,x):
+        
         self.x = x
         self.xCenter = x + int(self.size / 2)
         
