@@ -85,7 +85,7 @@ def runSimulation():
         
         environmentRenderer.render(getColor('white'),getColor('white'),getColor('red'))
         randomRenderer.render()
-        robotViewRenderer.render(getColor('blue'),getColor('white'),getColor('black'))
+        robotViewRenderer.render(getColor('blue'),getColor('white'),getColor('black'),True)
         
         ##
         
