@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import math
 from Helpers.Helpers import *
+from gopigo import *
 
 class Robot(object):
     ###
@@ -146,6 +147,15 @@ class Robot(object):
         #Move
         #Still have to do
         #TO DO
+        #testing for the robot
+        if self.moveUp:
+            fwd()
+        if self.moveDown:
+            bwd()
+        if self.rotateLeft:
+            left()
+        if self.rotateRight:
+            right()
         return
     
     ###
