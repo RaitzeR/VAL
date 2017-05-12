@@ -156,6 +156,8 @@ class Robot(object):
             left()
         if self.rotateRight:
             right()
+        if not self.moveUp and not self.moveDown and not self.rotateLeft and not self.rotateRight:
+            stop()
         return
     
     ###
