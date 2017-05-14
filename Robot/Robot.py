@@ -39,10 +39,13 @@ class Robot(object):
         self.rotate = False
         self.moveUp = False
         self.moveDown = False
+        self.servoRight = False
+        self.servoLeft = False
         self.acceleration = acceleration
         self.rotationSpeed = rotationSpeed
         self.maxSpeed = maxSpeed
         self.wheelDiameter = wheelDiameter
+        self.servoPos = 0
         
     ###
      # This moves the robot based on where he thinks he is and is going.
@@ -158,6 +161,15 @@ class Robot(object):
             right()
         if not self.moveUp and not self.moveDown and not self.rotateLeft and not self.rotateRight:
             stop()
+        if self.servoLeft:
+            enable_servo()
+            servo(self.servoPos + 1)
+        if self.servoRight:
+            enable_servo()
+            servo(self.servoPos - 1)
+            
+        if not self.servoLeft and not self.servoRight:
+            disable_servo()
         return
     
     ###

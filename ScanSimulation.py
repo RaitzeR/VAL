@@ -92,7 +92,7 @@ def runSimulation():
         ##Handle key presses
         
         for event in pygame.event.get():
-            robot.moveDown,robot.moveUp,robot.rotateRight,robot.rotateLeft,robot.rotate,doScan = RobotActionHandler(event,robot)
+            robot.moveDown,robot.moveUp,robot.rotateRight,robot.rotateLeft,robot.rotate,doScan,robot.servoLeft,robot.servoRight = RobotActionHandler(event,robot)
             doTerminate = TerminateHandler(event)
             if doTerminate:
                 terminate()

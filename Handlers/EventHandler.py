@@ -38,6 +38,8 @@ def RobotActionHandler(event,robot):
     rotateRight = robot.rotateRight
     rotateLeft = robot.rotateLeft
     rotate = robot.rotate
+    servoLeft = robot.servoLeft
+    servoRight = robot.servoRight
     
     if event.type == KEYDOWN:
         if event.key in (K_UP, K_w):
@@ -56,18 +58,28 @@ def RobotActionHandler(event,robot):
             rotate = True
         if event.key == K_x:
             Scan = True
+        if event.key == K_q:
+            servoLeft = True
+            servoRight = False
+        if event.key == K_e:
+            servoRight = True
+            servoLeft = False
     if event.type == KEYUP:
         if event.key in (K_UP, K_w):
             moveUp = False
-        elif event.key in (K_DOWN, K_s):
+        if event.key in (K_DOWN, K_s):
             moveDown = False
-        elif event.key in (K_LEFT, K_a):
+        if event.key in (K_LEFT, K_a):
             rotaterate = 0
             rotateLeft = False
             rotate = False
-        elif event.key in (K_RIGHT, K_d):
+        if event.key in (K_RIGHT, K_d):
             rotaterate = 0
             rotateRight = False
             rotate = False
+        if event.key == K_q:
+            servoLeft = False
+        if event.key == K_e:
+            servoRight = False
             
-    return moveDown,moveUp,rotateRight,rotateLeft,rotate,Scan
+    return moveDown,moveUp,rotateRight,rotateLeft,rotate,Scan,servoLeft,servoRight
