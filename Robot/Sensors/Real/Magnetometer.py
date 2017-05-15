@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import XLoBorg
 import math
+from Dependencies.XLoBorg.XLoBorg import *
 from Robot.Sensors.Real.Sensor import Sensor
 
 class Magnetometer(Sensor):
