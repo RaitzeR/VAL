@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import math
-from Dependencies.XLoBorg.XLoBorg import *
+from Dependencies.XLoBorg.XLoBorg import XLoBorg
 from Robot.Sensors.Real.Sensor import Sensor
 
 class Magnetometer(Sensor):
@@ -14,7 +14,7 @@ class Magnetometer(Sensor):
      ##      
     def __init__(self):
         super(Magnetometer, self).__init__()
-        self.heading = updateHeading()
+        self.heading = self.updateHeading()
         
     ###
      # We use this to check if the Magnetometer sensor is active or not.

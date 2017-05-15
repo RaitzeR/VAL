@@ -46,7 +46,7 @@ Wrapper used by the XLoBorg module to print messages, will call printFunction if
     """
     global printFunction
     if printFunction == None:
-        print message
+        print(message)
     else:
         printFunction(message)
 
@@ -297,7 +297,7 @@ if __name__ == '__main__':
             x, y, z = ReadAccelerometer()
             mx, my, mz = ReadCompassRaw()
             temp = ReadTemperature()
-            print 'X = %+01.4f G, Y = %+01.4f G, Z = %+01.4f G, mX = %+06d, mY = %+06d, mZ = %+06d, T = %+03d°C' % (x, y, z, mx, my, mz, temp)
+            print('X = %+01.4f G, Y = %+01.4f G, Z = %+01.4f G, mX = %+06d, mY = %+06d, mZ = %+06d, T = %+03d°C' % (x, y, z, mx, my, mz, temp))
             time.sleep(0.1)
     except KeyboardInterrupt:
         # User aborted
