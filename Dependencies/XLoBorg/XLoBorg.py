@@ -15,8 +15,10 @@ tempOffest              The offset to add to the temperature reading in °C
 """
 
 # Import the libraries we need
+import sys
 import smbus
 import struct
+import math
 
 ### MODULE DATA ###
 # Shared values used by this module
@@ -46,7 +48,7 @@ Wrapper used by the XLoBorg module to print messages, will call printFunction if
     """
     global printFunction
     if printFunction == None:
-        print(message)
+        print message
     else:
         printFunction(message)
 
@@ -72,10 +74,27 @@ If tryOtherBus is True or omitted, this function will attempt to use the other b
     global addressCompass
     global foundAccelerometer
     global foundCompass
+    global magxoffset, magyoffset, magzoffset
 
-    Print('Loading XLoBorg on bus %d' % (busNumber))
+    # Read predetermined magnetometer offsets from file if present
+    # File MAG3110offsets should contain 3 signed dicimal numbers separated by spaces.
+    # Blank lines, lines starting with # and lines following a valid line are ignored.
+    magxoffset = magyoffset = magzoffset = 0
+    try:
+        f = open('MAG3110offsets', 'r')
+	line = "\n"
+	while line == "\n" or line[0] == "#":
+	    line = f.readline()
+	data = line.split()
+	magxoffset = int(data[0])
+	magyoffset = int(data[1])
+	magzoffset = int(data[2])
+	print("magxoffset=%d magyoffset=%d magzoffset=%d" % (magxoffset, magyoffset, magzoffset))
+    except:
+        print('No MAG3110offsets file found: offsets set to zero')
 
     # Open the bus
+    Print('Loading XLoBorg on bus %d' % (busNumber))
     bus = smbus.SMBus(busNumber)
 
     # Check for accelerometer
@@ -171,18 +190,14 @@ Initialises the compass on bus to default states
     global bus
     global addressCompass
 
-    # Acquisition mode
-    register = 0x11             # CTRL_REG2
-    data  = (1 << 7)            # Reset before each acquisition
-    data |= (1 << 5)            # Raw mode, do not apply user offsets
-    data |= (0 << 5)            # Disable reset cycle
+    # System operation
+    register = 0x10             # CTRL_REG1
+    # Set in standby mode before setting config
+    data = 0
     try:
         bus.write_byte_data(addressCompass, register, data)
     except:
-        Print('Failed sending CTRL_REG2!')
-
-    # System operation
-    register = 0x10             # CTRL_REG1
+        Print('Failed sending CTRL_REG1!')
     data  = (0 << 5)            # Output data rate (10 Hz when paired with 128 oversample)
     data |= (3 << 3)            # Oversample of 128
     data |= (0 << 2)            # Disable fast read
@@ -192,6 +207,16 @@ Initialises the compass on bus to default states
         bus.write_byte_data(addressCompass, register, data)
     except:
         Print('Failed sending CTRL_REG1!')
+
+    # Acquisition mode
+    register = 0x11             # CTRL_REG2
+    data  = (1 << 7)            # Reset before each acquisition
+    data |= (1 << 5)            # Raw mode, do not apply user offsets
+    data |= (0 << 4)            # Disable reset cycle
+    try:
+        bus.write_byte_data(addressCompass, register, data)
+    except:
+        Print('Failed sending CTRL_REG2!')
 
 def ReadAccelerometer():
     """
@@ -233,6 +258,7 @@ Reads the X, Y and Z axis raw magnetometer readings
     """
     global bus
     global addressCompass
+    global magxoffset, magyoffset, magzoffset
 
     # Read the data from the compass chip
     try:
@@ -252,7 +278,7 @@ Reads the X, Y and Z axis raw magnetometer readings
     bytes = struct.pack('BBBBBB', xl, xh, yl, yh, zl, zh)
     x, y, z = struct.unpack('hhh', bytes)
 
-    return x, y, z
+    return x - magxoffset, y - magyoffset, z - magzoffset
 
 def ReadTemperature():
     """
@@ -296,10 +322,18 @@ if __name__ == '__main__':
             # Read the 
             x, y, z = ReadAccelerometer()
             mx, my, mz = ReadCompassRaw()
+	    mxf = float(mx)/10
+	    myf = float(my)/10
+	    mzf = float(mz)/10
+	    hdg = math.atan2(myf, mxf)
+	    hdg = hdg * 180/math.pi
+	    if hdg < 0:
+	        hdg = hdg + 360
             temp = ReadTemperature()
-            print('X = %+01.4f G, Y = %+01.4f G, Z = %+01.4f G, mX = %+06d, mY = %+06d, mZ = %+06d, T = %+03d°C' % (x, y, z, mx, my, mz, temp))
+            print 'X = %+01.4f G, Y = %+01.4f G, Z = %+01.4f G, mX = %6.1f uT, mY = %6.1f uT, mZ = %6.1f uT, Hdg = %3d T = %+03d°C\r' % (x, y, z, mxf, myf, mzf, hdg, temp),
+	    sys.stdout.flush()
             time.sleep(0.1)
     except KeyboardInterrupt:
         # User aborted
-        pass
+        print ''
 
