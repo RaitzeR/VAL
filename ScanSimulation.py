@@ -1,5 +1,7 @@
 import random, sys, math, pygame
 
+from gopigo import *
+
 from pygame.locals import *
 from Helpers.Helpers import *
 from Helpers.IntersectingLineDetection import *
@@ -42,7 +44,8 @@ def main():
     DISPLAY = Display(WINWIDTH,WINHEIGHT)
     pygame.display.set_caption('ScanSimulator')
     while True:
-        runSimulation()
+        #runSimulation()
+        runChallenge1()
         
 def runSimulation():
     camera = Camera(CAMERA_SLACK)
@@ -99,6 +102,66 @@ def runSimulation():
             if doScan:
                 robot.scan(environment)
                 
+        ##
+        
+        ##handle robot movement
+
+        robot.handleMovementCommands()                
+        environment.triggerRobotRotation()        
+        environment.triggerRobotMovement()
+        
+        ##
+        
+        
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+
+def runChallenge1():
+    camera = Camera(CAMERA_SLACK)
+    
+    environment = Environment()
+    environment.buildWalls()
+    
+    robot = Robot(ROBOSIZE,HALF_WINWIDTH,HALF_WINHEIGHT)
+    
+    ##Init Renderers
+    
+    environmentRenderer = EnvironmentRenderer(environment,camera,DISPLAY)
+    randomRenderer = RandomRenderer(environment,camera,robot,DISPLAY)
+    robotViewRenderer = RobotViewRenderer(robot,camera,DISPLAY)
+    
+    ##
+    
+    ##Add sensors to the robot
+    
+    ultrasonic = Ultrasonic(350)
+    robot.attachUltrasonic(ultrasonic)
+    hall = Hall()
+    robot.attachHall(hall)
+    magnetometer = Magnetometer()
+    robot.attachMagnetometer(magnetometer)
+    
+    ##
+    
+    ##Add robot to the environment
+    
+    environment.addRobot(robot)
+    
+    ##
+    
+    enable_encoders()
+    enc_tgt(1,1,18)
+    
+    while True:
+        
+        camera.adjustCamera(DISPLAY,robot)
+        
+        ## Render Stuff
+        
+        environmentRenderer.render(getColor('white'),getColor('white'),getColor('red'))
+        randomRenderer.render()
+        robotViewRenderer.render(getColor('blue'),getColor('white'),getColor('black'),True)
+        
         ##
         
         ##handle robot movement
