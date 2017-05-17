@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import math
-from Dependencies.XLoBorg.XLoBorg import XLoBorg
+from Dependencies.XLoBorg import XLoBorg
 from Robot.Sensors.Real.Sensor import Sensor
 
 class Magnetometer(Sensor):
@@ -14,7 +14,8 @@ class Magnetometer(Sensor):
      ##      
     def __init__(self):
         super(Magnetometer, self).__init__()
-        self.heading = self.updateHeading()
+        XLoBorg.Init()
+        self.updateHeading()
         
     ###
      # We use this to check if the Magnetometer sensor is active or not.
@@ -46,7 +47,7 @@ class Magnetometer(Sensor):
      ##
         
     def updateHeading(self):
-        x,y,z = XLoBorg.ReadCompassRaw
+        x,y,z = XLoBorg.ReadCompassRaw()
         if y > 0:
             heading = 90 - math.atan2(x,y) * 180 / math.pi
         elif y < 0:
