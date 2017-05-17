@@ -46,7 +46,7 @@ class Magnetometer(Sensor):
      #
      ##
         
-    def updateHeading(self, heading):
+    def updateHeading(self, heading = 0):
         x,y,z = XLoBorg.ReadCompassRaw()
         heading = math.atan2(y,x)
         heading = heading * 180 / math.pi
