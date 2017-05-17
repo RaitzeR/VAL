@@ -37,6 +37,7 @@ class Magnetometer(Sensor):
 
     def getHeading(self):
         self._before()
+        self.updateHeading()
         return self.heading
     
     ###
