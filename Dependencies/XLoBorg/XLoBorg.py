@@ -322,16 +322,16 @@ if __name__ == '__main__':
             # Read the 
             x, y, z = ReadAccelerometer()
             mx, my, mz = ReadCompassRaw()
-	    mxf = float(mx)/10
-	    myf = float(my)/10
-	    mzf = float(mz)/10
-	    hdg = math.atan2(myf, mxf)
-	    hdg = hdg * 180/math.pi
-	    if hdg < 0:
-	        hdg = hdg + 360
-            temp = ReadTemperature()
+            mxf = float(mx)/10
+            myf = float(my)/10
+            mzf = float(mz)/10
+            hdg = math.atan2(myf, mxf)
+            dg = hdg * 180/math.pi
+            if hdg < 0:
+                hdg = hdg + 360
+                temp = ReadTemperature()
             print('X = %+01.4f G, Y = %+01.4f G, Z = %+01.4f G, mX = %6.1f uT, mY = %6.1f uT, mZ = %6.1f uT, Hdg = %3d T = %+03d°C\r' % (x, y, z, mxf, myf, mzf, hdg, temp)),
-	    sys.stdout.flush()
+            sys.stdout.flush()
             time.sleep(0.1)
     except KeyboardInterrupt:
         # User aborted
