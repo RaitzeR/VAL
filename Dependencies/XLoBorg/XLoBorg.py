@@ -82,14 +82,14 @@ If tryOtherBus is True or omitted, this function will attempt to use the other b
     magxoffset = magyoffset = magzoffset = 0
     try:
         f = open('MAG3110offsets', 'r')
-	line = "\n"
-	while line == "\n" or line[0] == "#":
-	    line = f.readline()
-	data = line.split()
-	magxoffset = int(data[0])
-	magyoffset = int(data[1])
-	magzoffset = int(data[2])
-	print("magxoffset=%d magyoffset=%d magzoffset=%d" % (magxoffset, magyoffset, magzoffset))
+        line = "\n"
+        while line == "\n" or line[0] == "#":
+            line = f.readline()
+            data = line.split()
+            magxoffset = int(data[0])
+            magyoffset = int(data[1])
+            magzoffset = int(data[2])
+            print("magxoffset=%d magyoffset=%d magzoffset=%d" % (magxoffset, magyoffset, magzoffset))
     except:
         print('No MAG3110offsets file found: offsets set to zero')
 
