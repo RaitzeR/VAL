@@ -19,6 +19,7 @@ import sys
 import smbus
 import struct
 import math
+import os
 
 ### MODULE DATA ###
 # Shared values used by this module
@@ -81,7 +82,7 @@ If tryOtherBus is True or omitted, this function will attempt to use the other b
     # Blank lines, lines starting with # and lines following a valid line are ignored.
     magxoffset = magyoffset = magzoffset = 0
     try:
-        f = open('MAG3110offsets', 'r')
+        f = open(os.path.join(os.path.dirname(__file__),'MAG3110offsets'), 'r')
         line = "\n"
         while line == "\n" or line[0] == "#":
             line = f.readline()

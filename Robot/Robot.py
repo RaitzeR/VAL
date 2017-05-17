@@ -189,13 +189,10 @@ class Robot(object):
      ##
         
     def scan(self,ENVIRONMENT):
-        for degree in range(360):
-            if degree % 20:
-                continue
-            else:
-                distance = self.ultrasonic.scan(ENVIRONMENT,degree)
+        degree = self.magnetometer.getHeading()
+        distance = self.ultrasonic.scan(ENVIRONMENT,degree)
                 
-                if distance != False:                    
-                    endpos = getEndPoint(degree,distance,self.getPosition())
-                    self.addScannedPoint(endpos)
+        if distance != False and distance < self.ultrasonic.scanLength:                    
+            endpos = getEndPoint(degree,distance,self.getPosition())
+            self.addScannedPoint(endpos)
                                     
