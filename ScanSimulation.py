@@ -34,7 +34,7 @@ SCAN_ROTATION_SPEED = 100 #how many milliseconds does it take to turn 1 degree
 FRICTION = 2
 
 
-def main():
+def main() -> None:
     global FPSCLOCK, DISPLAY
     
     pygame.init()
@@ -44,7 +44,7 @@ def main():
     while True:
         runSimulation()
         
-def runSimulation():
+def runSimulation() -> None:
     camera = Camera(CAMERA_SLACK)
     
     environment = Environment()
@@ -113,7 +113,7 @@ def runSimulation():
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
-def terminate():
+def terminate() -> None:
     pygame.quit()
     sys.exit()
 

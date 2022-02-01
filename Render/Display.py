@@ -9,17 +9,18 @@ Created on Tue May  9 23:20:51 2017
 import pygame
 from pygame.locals import *
 
+
 class Display(object):
     ###
-     # Custom display class (so I don't have to pass around the display and pygame objects).
-     #
-     # @param int - Width of the display
-     # @param int - Height of the display
-     #
-     ##
-    
-    def __init__(self,displayWidth,displayHeight):
+    # Custom display class (so I don't have to pass around the display and pygame objects).
+    #
+    # @param int - Width of the display
+    # @param int - Height of the display
+    #
+    ##
+
+    def __init__(self, displayWidth: int, displayHeight: int):
         self.displayWidth = displayWidth
         self.displayHeight = displayHeight
-        self.displaySurface = pygame.display.set_mode((displayWidth,displayHeight))
+        self.displaySurface = pygame.display.set_mode((displayWidth, displayHeight))
         self.pygame = pygame

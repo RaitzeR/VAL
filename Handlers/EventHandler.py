@@ -2,36 +2,38 @@
 import pygame
 
 from pygame.locals import *
+from typing import Type, Tuple
+from Robot.Robot import Robot
 
 ###
- # Handles the terminate keypress
- # 
- # @param \pygame\event event - pygame keypress event
- #
- # @return bool - whether or not  to terminate the program
- ##
+# Handles the terminate keypress
+#
+# @param \pygame\event event - pygame keypress event
+#
+# @return bool - whether or not  to terminate the program
+##
 
-def TerminateHandler(event):
+def TerminateHandler(event) -> bool:
     Terminate = False
     if event.type == QUIT:
         Terminate = True
     elif event.type == KEYUP:
         if event.key == K_ESCAPE:
             Terminate = True
-            
+
     return Terminate
 
-###
- # Handles the keypresses for robot actions
- # 
- # @param \pygame\event event - pygame keypress event
- # @param \Robot\Robot - The Robot Class
- #
- # @return bool,bool,bool,bool,bool,bool - Bool values for the robot movements
- ##
 
-def RobotActionHandler(event,robot):
-    
+###
+# Handles the keypresses for robot actions
+#
+# @param \pygame\event event - pygame keypress event
+# @param \Robot\Robot - The Robot Class
+#
+# @return bool,bool,bool,bool,bool,bool - Bool values for the robot movements
+##
+
+def RobotActionHandler(event, robot: Type[Robot]) -> Tuple[bool,bool,bool,bool,bool,bool,bool,bool]:
     Scan = False
     moveDown = robot.moveDown
     moveUp = robot.moveUp
@@ -40,7 +42,7 @@ def RobotActionHandler(event,robot):
     rotate = robot.rotate
     servoLeft = robot.servoLeft
     servoRight = robot.servoRight
-    
+
     if event.type == KEYDOWN:
         if event.key in (K_UP, K_w):
             moveDown = False
@@ -81,5 +83,5 @@ def RobotActionHandler(event,robot):
             servoLeft = False
         if event.key == K_e:
             servoRight = False
-            
-    return moveDown,moveUp,rotateRight,rotateLeft,rotate,Scan,servoLeft,servoRight
+
+    return moveDown, moveUp, rotateRight, rotateLeft, rotate, Scan, servoLeft, servoRight
